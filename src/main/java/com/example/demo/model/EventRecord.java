@@ -40,5 +40,26 @@ public EventRecord(){
 public EventRecord(String eventCode,String eventName,String venue,LocalDate eventDate,Double basePrice,Boolean active) {
     this.eventCode = eventCode;
     this.eventName = eventName;
-    this.venue = 
+    this.venue = venue;
+    this.eventDate = eventDate;
+    this.basePrice = basePrice;
+    this.active = active;
 }
+
+@PrePersist
+    protected void onCreate(){
+        createdAt = LocalDateTime.now();
+    }
+
+    public Long getId(){
+         return id;
+    }
+
+    public void setId(Long id){
+        this.id = id;
+    }
+
+     public Long getEventId(){
+        return eventId;
+    }
+
