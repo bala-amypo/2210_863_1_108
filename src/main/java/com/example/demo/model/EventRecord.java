@@ -13,5 +13,10 @@ public class EventRecord {
     private Long id;
 
     @Column(unique = true, nullable = false)
-    private String eve;
+    private String eventCode;
+
+    @Column(nullable = false)
+    private String eventName;
+    
+
 }
