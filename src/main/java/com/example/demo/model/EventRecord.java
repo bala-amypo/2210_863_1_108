@@ -37,4 +37,8 @@ public class EventRecord {
 public EventRecord(){
 
 }
-public EventRecord(String eventCode,String eventName,)
+public EventRecord(String eventCode,String eventName,String venue,LocalDate eventDate,Double basePrice,Boolean active) {
+    this.eventCode = eventCode;
+    this.eventName = eventName;
+    this.venue = 
+}
