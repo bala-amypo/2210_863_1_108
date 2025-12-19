@@ -10,5 +10,14 @@ public class DynamicPriceRecord {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @C
+    @Column(nullable = false)
+    private Long eventId;
+
+     @Column(nullable = false)
+    private Double computedPrice;
+
+     @Column(nullable = false)
+    private String appliedRuleCodes;
+
+    
 }
