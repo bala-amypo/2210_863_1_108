@@ -27,5 +27,8 @@ public class DynamicPriceRecord {
 
     }
 
-    public DynamicPriceRecord(Long eventId , Double computedPrice)
+    public DynamicPriceRecord(Long eventId , Double computedPrice, String appliedRuleCodes) {
+        this.eventId = eventId;
+        this.
+    }
 }
