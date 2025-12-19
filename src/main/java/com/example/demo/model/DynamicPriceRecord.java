@@ -52,10 +52,17 @@ public class DynamicPriceRecord {
     public void setEvent(Long eventId){
         this.eventId = eventId;
     }
-    publicc Double getComputedPrice() {
+    public Double getComputedPrice() {
         return computedPrice;
     }
-    public void setComputedPrice(Double ComputedPrice){
-        this.ComputedPrice
+    public void setComputedPrice(Double computedPrice){
+        this.computedPrice = computedPrice;
     }
+    public String getAppliedRuleCodes(){
+        return appliedRuleCodes;
+    }
+    public void setAppliedRules(String appliedRuleCodes){
+        this.appliedRuleCodes = appliedRuleCodes;
+    }
+    public
 }
