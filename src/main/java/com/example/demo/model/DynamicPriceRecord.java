@@ -27,5 +27,5 @@ public class DynamicPriceRecord {
 
     }
 
-    public DynamicPriceRecord(Lon)
+    public DynamicPriceRecord(Long eventId , Double computedPrice)
 }
