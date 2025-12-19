@@ -52,5 +52,10 @@ public class DynamicPriceRecord {
     public void setEvent(Long eventId){
         this.eventId = eventId;
     }
-    publicc Double
+    publicc Double getComputedPrice() {
+        return computedPrice;
+    }
+    public void setComputedPrice(Double ComputedPrice){
+        this.ComputedPrice
+    }
 }
