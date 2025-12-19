@@ -59,11 +59,12 @@ public EventRecord(String eventCode,String eventName,String venue,LocalDate even
         this.id = id;
     }
 
-     public Long getEventCode(){
+     public String getEventCode(){
         return eventCode;
     }
-    public void setEventCode(String eventCode){
+    public String setEventCode(String eventCode){
         this.eventCode = eventCode;
     }
     
+
 

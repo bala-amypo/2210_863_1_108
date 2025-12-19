@@ -49,7 +49,7 @@ public class DynamicPriceRecord {
         return eventId;
     }
 
-    public void setEvent(Long eventId){
+    public void setEventId(Long eventId){
         this.eventId = eventId;
     }
     public Double getComputedPrice() {
