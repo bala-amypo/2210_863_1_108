@@ -18,5 +18,15 @@ public class EventRecord {
     @Column(nullable = false)
     private String eventName;
     
+    @Column(nullable = false)
+    private String venue;
+
+    @Column(nullable = false)
+    private LocalDate eventDate;
+
+    @Column(nullable = false)
+    private Double basePrice;
+
+    
 
 }
