@@ -64,5 +64,10 @@ public class DynamicPriceRecord {
     public void setAppliedRules(String appliedRuleCodes){
         this.appliedRuleCodes = appliedRuleCodes;
     }
-    public
+    public LocalDateTime getComputedAt(){
+        return computedAt;
+    }
+    public void setComputedAt(LocalDateTime computedAt){
+        this.computedAt=computedAt;
+    }
 }
