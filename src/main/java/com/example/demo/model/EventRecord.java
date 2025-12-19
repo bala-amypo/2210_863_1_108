@@ -27,6 +27,14 @@ public class EventRecord {
     @Column(nullable = false)
     private Double basePrice;
 
-    
+    @Column(nullable = false)
+    private LocalDateTime createdAt;
+
+    @Column(nullable = false)
+    private Boolean active;
+}
+
+public EventRecord(){
 
 }
+public EventRecord(String eventCode,String eventName,)
