@@ -42,5 +42,15 @@ public class DynamicPriceRecord {
     public Long getId(){
         return id;
     }
-    public void setId
+    public void setId(Long id){
+        this.id = id;
+    }
+    public Long getEventId(){
+        return eventId;
+    }
+
+    public void setEvent(Long eventId){
+        this.eventId = eventId;
+    }
+    publicc Double
 }
