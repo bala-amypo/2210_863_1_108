@@ -19,5 +19,13 @@ public class DynamicPriceRecord {
      @Column(nullable = false)
     private String appliedRuleCodes;
 
-    
+     @Column(nullable = false)
+    private LocalDateTime computedAt;
+
+
+    public DynamicPriceRecord(){
+
+    }
+
+    public DynamicPriceRecord(Lon)
 }
