@@ -13,9 +13,9 @@ import java.util.Map;
 @Tag(name = "Event Management")
 public class EventRecordController {
     
-    private final EventRecordService eventRecordService;
+    private final EventRecordServiceImpl eventRecordService;
     
-    public EventRecordController(EventRecordService eventRecordService) {
+    public EventRecordController(EventRecordServiceImpl eventRecordService) {
         this.eventRecordService = eventRecordService;
     }
     

@@ -12,9 +12,9 @@ import java.util.List;
 @Tag(name = "Price Adjustment Logs")
 public class PriceAdjustmentLogController {
     
-    private final PriceAdjustmentLogService priceAdjustmentLogService;
+    private final PriceAdjustmentLogServiceImpl priceAdjustmentLogService;
     
-    public PriceAdjustmentLogController(PriceAdjustmentLogService priceAdjustmentLogService) {
+    public PriceAdjustmentLogController(PriceAdjustmentLogServiceImpl priceAdjustmentLogService) {
         this.priceAdjustmentLogService = priceAdjustmentLogService;
     }
     

@@ -13,9 +13,9 @@ import java.util.Map;
 @Tag(name = "Seat Inventory Management")
 public class SeatInventoryController {
     
-    private final SeatInventoryService seatInventoryService;
+    private final SeatInventoryServiceImpl seatInventoryService;
     
-    public SeatInventoryController(SeatInventoryService seatInventoryService) {
+    public SeatInventoryController(SeatInventoryServiceImpl seatInventoryService) {
         this.seatInventoryService = seatInventoryService;
     }
     

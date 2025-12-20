@@ -12,9 +12,9 @@ import java.util.List;
 @Tag(name = "Dynamic Pricing")
 public class DynamicPricingController {
     
-    private final DynamicPricingEngineService dynamicPricingEngineService;
+    private final DynamicPricingEngineServiceImpl dynamicPricingEngineService;
     
-    public DynamicPricingController(DynamicPricingEngineService dynamicPricingEngineService) {
+    public DynamicPricingController(DynamicPricingEngineServiceImpl dynamicPricingEngineService) {
         this.dynamicPricingEngineService = dynamicPricingEngineService;
     }
     

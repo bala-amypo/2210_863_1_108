@@ -12,9 +12,9 @@ import java.util.List;
 @Tag(name = "Pricing Rule Management")
 public class PricingRuleController {
     
-    private final PricingRuleService pricingRuleService;
+    private final PricingRuleServiceImpl pricingRuleService;
     
-    public PricingRuleController(PricingRuleService pricingRuleService) {
+    public PricingRuleController(PricingRuleServiceImpl pricingRuleService) {
         this.pricingRuleService = pricingRuleService;
     }
     
