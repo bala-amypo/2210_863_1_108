@@ -37,7 +37,7 @@ public class SeatInventoryServiceImpl {
     }
     
     @Transactional
-    public void updateRemainingSeats(Long eventId, Integer remainingSeats) {
+    public SeatInventoryRecord updateRemainingSeats(Long eventId, Integer remainingSeats) {
         SeatInventoryRecord inventory = getInventoryByEvent(eventId);
         
         // Validate: Remaining seats cannot exceed total seats
