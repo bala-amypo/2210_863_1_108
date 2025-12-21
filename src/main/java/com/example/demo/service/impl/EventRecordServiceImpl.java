@@ -50,6 +50,6 @@ public class EventRecordServiceImpl {
     public void updateEventStatus(Long id, boolean active) {
         EventRecord event = getEventById(id);
         event.setActive(active);
-        eventRecordRepository.save(event);
+        return eventRecordRepository.save(event);
     }
 }
