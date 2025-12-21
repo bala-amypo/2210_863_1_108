@@ -35,17 +35,17 @@ public class SeatInventoryService {
     }
     
     @Transactional
-    public void updateRemainingSeats(Long eventId, Integer remainingSeats) {
-        SeatInventoryRecord inventory = getInventoryByEvent(eventId);
-        
-        // Validate: Remaining seats cannot exceed total seats
-        if (remainingSeats > inventory.getTotalSeats()) {
-            throw new BadRequestException("Remaining seats cannot exceed total seats");
-        }
-        
-        inventory.setRemainingSeats(remainingSeats);
-        seatInventoryRecordRepository.save(inventory);
+public SeatInventoryRecord updateRemainingSeats(Long eventId, Integer remainingSeats) {
+    SeatInventoryRecord inventory = getInventoryByEvent(eventId);
+
+    if (remainingSeats > inventory.getTotalSeats()) {
+        throw new BadRequestException("Remaining seats cannot exceed total seats");
     }
+
+    inventory.setRemainingSeats(remainingSeats);
+    return seatInventoryRecordRepository.save(inventory);
+}
+
     
     public SeatInventoryRecord getInventoryByEvent(Long eventId) {
         return seatInventoryRecordRepository.findByEventId(eventId)
