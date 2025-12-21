@@ -44,9 +44,11 @@ public class SeatInventoryServiceImpl {
         if (remainingSeats > inventory.getTotalSeats()) {
             throw new BadRequestException("Remaining seats cannot exceed total seats");
         }
+
+        
         
         inventory.setRemainingSeats(remainingSeats);
-        seatInventoryRecordRepository.save(inventory);
+         return seatInventoryRecordRepository.save(inventory);
     }
     
     public SeatInventoryRecord getInventoryByEvent(Long eventId) {
