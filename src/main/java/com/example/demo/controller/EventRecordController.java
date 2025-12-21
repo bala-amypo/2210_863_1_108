@@ -7,15 +7,16 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/events")
 @Tag(name = "Event Management")
 public class EventRecordController {
     
-    private final EventRecordServiceImpl eventRecordService;
+    private final EventRecordService eventRecordService;
     
-    public EventRecordController(EventRecordServiceImpl eventRecordService) {
+    public EventRecordController(EventRecordService eventRecordService) {
         this.eventRecordService = eventRecordService;
     }
     
@@ -38,17 +39,18 @@ public class EventRecordController {
     }
     
     @PutMapping("/{id}/status")
-    public ResponseEntity<Void> updateStatus(
+    public ResponseEntity<EventRecord> updateStatus(
             @PathVariable Long id, 
             @RequestBody Map<String, Boolean> statusUpdate) {
         boolean active = statusUpdate.get("active");
-        eventRecordService.updateEventStatus(id, active);
-        return ResponseEntity.ok().build();
+        EventRecord updated = eventRecordService.updateEventStatus(id, active);
+        return ResponseEntity.ok(updated);
     }
     
     @GetMapping("/lookup/{eventCode}")
     public ResponseEntity<EventRecord> lookupByCode(@PathVariable String eventCode) {
-        EventRecord event = eventRecordService.getEventByCode(eventCode);
-        return ResponseEntity.ok(event);
+        Optional<EventRecord> event = eventRecordService.getEventByCode(eventCode);
+        return event.map(ResponseEntity::ok)
+                   .orElse(ResponseEntity.notFound().build());
     }
 }

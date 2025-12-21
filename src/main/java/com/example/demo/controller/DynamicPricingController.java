@@ -6,15 +6,16 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/dynamic-pricing")
 @Tag(name = "Dynamic Pricing")
 public class DynamicPricingController {
     
-    private final DynamicPricingEngineServiceImpl dynamicPricingEngineService;
+    private final DynamicPricingEngineService dynamicPricingEngineService;
     
-    public DynamicPricingController(DynamicPricingEngineServiceImpl dynamicPricingEngineService) {
+    public DynamicPricingController(DynamicPricingEngineService dynamicPricingEngineService) {
         this.dynamicPricingEngineService = dynamicPricingEngineService;
     }
     
@@ -26,8 +27,9 @@ public class DynamicPricingController {
     
     @GetMapping("/latest/{eventId}")
     public ResponseEntity<DynamicPriceRecord> getLatestPrice(@PathVariable Long eventId) {
-        DynamicPriceRecord priceRecord = dynamicPricingEngineService.getLatestPrice(eventId);
-        return ResponseEntity.ok(priceRecord);
+        Optional<DynamicPriceRecord> priceRecord = dynamicPricingEngineService.getLatestPrice(eventId);
+        return priceRecord.map(ResponseEntity::ok)
+                         .orElse(ResponseEntity.notFound().build());
     }
     
     @GetMapping("/history/{eventId}")

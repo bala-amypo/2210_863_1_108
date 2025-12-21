@@ -12,9 +12,9 @@ import java.util.List;
 @Tag(name = "Price Adjustment Logs")
 public class PriceAdjustmentLogController {
     
-    private final PriceAdjustmentLogServiceImpl priceAdjustmentLogService;
+    private final PriceAdjustmentLogService priceAdjustmentLogService;
     
-    public PriceAdjustmentLogController(PriceAdjustmentLogServiceImpl priceAdjustmentLogService) {
+    public PriceAdjustmentLogController(PriceAdjustmentLogService priceAdjustmentLogService) {
         this.priceAdjustmentLogService = priceAdjustmentLogService;
     }
     
@@ -34,11 +34,5 @@ public class PriceAdjustmentLogController {
     public ResponseEntity<List<PriceAdjustmentLog>> getAllAdjustments() {
         List<PriceAdjustmentLog> logs = priceAdjustmentLogService.getAllAdjustments();
         return ResponseEntity.ok(logs);
-    }
-    
-    @GetMapping("/{id}")
-    public ResponseEntity<PriceAdjustmentLog> getAdjustmentById(@PathVariable Long id) {
-        PriceAdjustmentLog log = priceAdjustmentLogService.getAdjustmentById(id);
-        return ResponseEntity.ok(log);
     }
 }

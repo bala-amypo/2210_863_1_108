@@ -7,15 +7,16 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/inventory")
 @Tag(name = "Seat Inventory Management")
 public class SeatInventoryController {
     
-    private final SeatInventoryServiceImpl seatInventoryService;
+    private final SeatInventoryService seatInventoryService;
     
-    public SeatInventoryController(SeatInventoryServiceImpl seatInventoryService) {
+    public SeatInventoryController(SeatInventoryService seatInventoryService) {
         this.seatInventoryService = seatInventoryService;
     }
     
@@ -26,18 +27,19 @@ public class SeatInventoryController {
     }
     
     @PutMapping("/{eventId}/remaining")
-    public ResponseEntity<Void> updateRemainingSeats(
+    public ResponseEntity<SeatInventoryRecord> updateRemainingSeats(
             @PathVariable Long eventId,
             @RequestBody Map<String, Integer> update) {
         Integer remainingSeats = update.get("remainingSeats");
-        seatInventoryService.updateRemainingSeats(eventId, remainingSeats);
-        return ResponseEntity.ok().build();
+        SeatInventoryRecord updated = seatInventoryService.updateRemainingSeats(eventId, remainingSeats);
+        return ResponseEntity.ok(updated);
     }
     
     @GetMapping("/event/{eventId}")
     public ResponseEntity<SeatInventoryRecord> getByEvent(@PathVariable Long eventId) {
-        SeatInventoryRecord inventory = seatInventoryService.getInventoryByEvent(eventId);
-        return ResponseEntity.ok(inventory);
+        Optional<SeatInventoryRecord> inventory = seatInventoryService.getInventoryByEvent(eventId);
+        return inventory.map(ResponseEntity::ok)
+                       .orElse(ResponseEntity.notFound().build());
     }
     
     @GetMapping

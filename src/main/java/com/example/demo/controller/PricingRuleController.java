@@ -6,15 +6,16 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/pricing-rules")
 @Tag(name = "Pricing Rule Management")
 public class PricingRuleController {
     
-    private final PricingRuleServiceImpl pricingRuleService;
+    private final PricingRuleService pricingRuleService;
     
-    public PricingRuleController(PricingRuleServiceImpl pricingRuleService) {
+    public PricingRuleController(PricingRuleService pricingRuleService) {
         this.pricingRuleService = pricingRuleService;
     }
     
@@ -40,8 +41,9 @@ public class PricingRuleController {
     
     @GetMapping("/{id}")
     public ResponseEntity<PricingRule> getRule(@PathVariable Long id) {
-        PricingRule rule = pricingRuleService.getRuleById(id);
-        return ResponseEntity.ok(rule);
+        Optional<PricingRule> rule = pricingRuleService.getRuleByCode(String.valueOf(id));
+        return rule.map(ResponseEntity::ok)
+                  .orElse(ResponseEntity.notFound().build());
     }
     
     @GetMapping
