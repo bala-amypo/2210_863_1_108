@@ -46,10 +46,11 @@ public class EventRecordServiceImpl {
         return eventRecordRepository.findAll();
     }
     
+    
     @Transactional
-    public void updateEventStatus(Long id, boolean active) {
-        EventRecord event = getEventById(id);
-        event.setActive(active);
-        return eventRecordRepository.save(event);
-    }
+    public EventRecord updateEventStatus(Long id, boolean active) {
+    EventRecord event = getEventById(id);
+    event.setActive(active);
+    return eventRecordRepository.save(event);
+}
 }
