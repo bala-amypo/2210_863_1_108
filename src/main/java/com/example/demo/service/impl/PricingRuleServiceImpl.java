@@ -1,29 +1,26 @@
-package com.example.demo.service.impl;
+package com.example.demo.service;
 
 import com.example.demo.exception.BadRequestException;
 import com.example.demo.exception.NotFoundException;
 import com.example.demo.model.PricingRule;
 import com.example.demo.repository.PricingRuleRepository;
-import com.example.demo.service.PricingRuleService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
-import java.util.Optional;
 
 @Service
-public class PricingRuleServiceImpl implements PricingRuleService {
+public class PricingRuleServiceImpl {
     
-    private final PricingRuleRepository ruleRepository;
+    private final PricingRuleRepository pricingRuleRepository;
     
-    public PricingRuleServiceImpl(PricingRuleRepository ruleRepository) {
-        this.ruleRepository = ruleRepository;
+    public PricingRuleServiceImpl(PricingRuleRepository pricingRuleRepository) {
+        this.pricingRuleRepository = pricingRuleRepository;
     }
     
-    @Override
     @Transactional
     public PricingRule createRule(PricingRule rule) {
         // Validate: Check for duplicate rule code
-        if (ruleRepository.existsByRuleCode(rule.getRuleCode())) {
+        if (pricingRuleRepository.existsByRuleCode(rule.getRuleCode())) {
             throw new BadRequestException("Rule code already exists");
         }
         
@@ -32,13 +29,12 @@ public class PricingRuleServiceImpl implements PricingRuleService {
             throw new BadRequestException("Price multiplier must be > 0");
         }
         
-        return ruleRepository.save(rule);
+        return pricingRuleRepository.save(rule);
     }
     
-    @Override
     @Transactional
     public PricingRule updateRule(Long id, PricingRule updatedRule) {
-        PricingRule rule = ruleRepository.findById(id)
+        PricingRule rule = pricingRuleRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Pricing rule not found"));
         
         // Validate: Price multiplier must be > 0
@@ -65,21 +61,24 @@ public class PricingRuleServiceImpl implements PricingRuleService {
             rule.setActive(updatedRule.getActive());
         }
         
-        return ruleRepository.save(rule);
+        return pricingRuleRepository.save(rule);
     }
     
-    @Override
     public List<PricingRule> getActiveRules() {
-        return ruleRepository.findByActiveTrue();
+        return pricingRuleRepository.findByActiveTrue();
     }
     
-    @Override
-    public Optional<PricingRule> getRuleByCode(String ruleCode) {
-        return ruleRepository.findByRuleCode(ruleCode);
+    public PricingRule getRuleByCode(String ruleCode) {
+        return pricingRuleRepository.findByRuleCode(ruleCode)
+                .orElseThrow(() -> new NotFoundException("Pricing rule not found"));
     }
     
-    @Override
+    public PricingRule getRuleById(Long id) {
+        return pricingRuleRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Pricing rule not found"));
+    }
+    
     public List<PricingRule> getAllRules() {
-        return ruleRepository.findAll();
+        return pricingRuleRepository.findAll();
     }
 }

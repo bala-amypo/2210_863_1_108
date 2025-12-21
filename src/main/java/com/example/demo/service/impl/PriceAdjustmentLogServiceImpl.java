@@ -1,34 +1,34 @@
-package com.example.demo.service.impl;
+package com.example.demo.service;
 
 import com.example.demo.model.PriceAdjustmentLog;
 import com.example.demo.repository.PriceAdjustmentLogRepository;
-import com.example.demo.service.PriceAdjustmentLogService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-public class PriceAdjustmentLogServiceImpl implements PriceAdjustmentLogService {
+public class PriceAdjustmentLogServiceImpl {
     
-    private final PriceAdjustmentLogRepository logRepository;
+    private final PriceAdjustmentLogRepository priceAdjustmentLogRepository;
     
-    public PriceAdjustmentLogServiceImpl(PriceAdjustmentLogRepository logRepository) {
-        this.logRepository = logRepository;
+    public PriceAdjustmentLogServiceImpl(PriceAdjustmentLogRepository priceAdjustmentLogRepository) {
+        this.priceAdjustmentLogRepository = priceAdjustmentLogRepository;
     }
     
-    @Override
     @Transactional
     public PriceAdjustmentLog logAdjustment(PriceAdjustmentLog log) {
-        return logRepository.save(log);
+        return priceAdjustmentLogRepository.save(log);
     }
     
-    @Override
     public List<PriceAdjustmentLog> getAdjustmentsByEvent(Long eventId) {
-        return logRepository.findByEventId(eventId);
+        return priceAdjustmentLogRepository.findByEventId(eventId);
     }
     
-    @Override
     public List<PriceAdjustmentLog> getAllAdjustments() {
-        return logRepository.findAll();
+        return priceAdjustmentLogRepository.findAll();
+    }
+    
+    public PriceAdjustmentLog getAdjustmentById(Long id) {
+        return priceAdjustmentLogRepository.findById(id).orElse(null);
     }
 }
