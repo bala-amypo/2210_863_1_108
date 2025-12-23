@@ -25,24 +25,6 @@ public class SecurityConfig {
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
     }
     
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-            .csrf(csrf -> csrf.disable())
-            .sessionManagement(session -> 
-                session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/auth/**").permitAll()
-                .requestMatchers("/hello-servlet").permitAll()
-                .requestMatchers("/swagger-ui/**", "/api-docs/**", "/swagger-ui.html").permitAll()
-                .requestMatchers("/api/**").authenticated()
-                .anyRequest().authenticated()
-            )
-            .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
-        
-        return http.build();
-    }
-    
 
 @Bean
 public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -56,30 +38,6 @@ public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Excepti
 
     return http.build();
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
