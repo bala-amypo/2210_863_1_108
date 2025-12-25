@@ -2,43 +2,40 @@ package com.example.demo.controller;
 
 import com.example.demo.model.DynamicPriceRecord;
 import com.example.demo.service.DynamicPricingEngineService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/dynamic-pricing")
-@Tag(name = "Dynamic Pricing")
+@Tag(name = "Dynamic Pricing", description = "Dynamic pricing engine endpoints")
+@SecurityRequirement(name = "Bearer Authentication")
 public class DynamicPricingController {
-    
-    private final DynamicPricingEngineService dynamicPricingEngineService;
-    
-    public DynamicPricingController(DynamicPricingEngineService dynamicPricingEngineService) {
-        this.dynamicPricingEngineService = dynamicPricingEngineService;
-    }
-    
+
+    @Autowired
+    private DynamicPricingEngineService dynamicPricingEngineService;
+
     @PostMapping("/compute/{eventId}")
-    public ResponseEntity<DynamicPriceRecord> computePrice(@PathVariable Long eventId) {
+    @Operation(summary = "Compute dynamic price for an event")
+    public ResponseEntity<DynamicPriceRecord> computeDynamicPrice(@PathVariable Long eventId) {
         DynamicPriceRecord priceRecord = dynamicPricingEngineService.computeDynamicPrice(eventId);
         return ResponseEntity.ok(priceRecord);
     }
-    
-    @GetMapping("/latest/{eventId}")
-    public ResponseEntity<DynamicPriceRecord> getLatestPrice(@PathVariable Long eventId) {
-        Optional<DynamicPriceRecord> priceRecord = dynamicPricingEngineService.getLatestPrice(eventId);
-        return priceRecord.map(ResponseEntity::ok)
-                         .orElse(ResponseEntity.notFound().build());
-    }
-    
+
     @GetMapping("/history/{eventId}")
+    @Operation(summary = "Get price history for an event")
     public ResponseEntity<List<DynamicPriceRecord>> getPriceHistory(@PathVariable Long eventId) {
         List<DynamicPriceRecord> history = dynamicPricingEngineService.getPriceHistory(eventId);
         return ResponseEntity.ok(history);
     }
-    
-    @GetMapping
+
+    @GetMapping("/all")
+    @Operation(summary = "Get all computed prices")
     public ResponseEntity<List<DynamicPriceRecord>> getAllComputedPrices() {
         List<DynamicPriceRecord> prices = dynamicPricingEngineService.getAllComputedPrices();
         return ResponseEntity.ok(prices);
