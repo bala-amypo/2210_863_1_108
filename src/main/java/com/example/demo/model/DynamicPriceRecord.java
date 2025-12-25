@@ -1,9 +1,10 @@
 package com.example.demo.model;
+
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name="dynamic_price_record")
+@Table(name = "dynamic_price_records")
 public class DynamicPriceRecord {
 
     @Id
@@ -13,61 +14,56 @@ public class DynamicPriceRecord {
     @Column(nullable = false)
     private Long eventId;
 
-     @Column(nullable = false)
+    @Column(nullable = false)
     private Double computedPrice;
 
-     @Column(nullable = false)
     private String appliedRuleCodes;
 
-     @Column(nullable = false)
     private LocalDateTime computedAt;
 
-
-    public DynamicPriceRecord(){
-
-    }
-
-    public DynamicPriceRecord(Long eventId , Double computedPrice, String appliedRuleCodes) {
-        this.eventId = eventId;
-        this.computedPrice = computedPrice;
-        this.appliedRuleCodes = appliedRuleCodes;
-    }
-
     @PrePersist
-    protected void onCreate(){
-        computedAt = LocalDateTime.now();
+    public void prePersist() {
+        this.computedAt = LocalDateTime.now();
     }
 
-
-    public Long getId(){
+    // Getters and Setters
+    public Long getId() {
         return id;
     }
-    public void setId(Long id){
+
+    public void setId(Long id) {
         this.id = id;
     }
-    public Long getEventId(){
+
+    public Long getEventId() {
         return eventId;
     }
 
-    public void setEventId(Long eventId){
+    public void setEventId(Long eventId) {
         this.eventId = eventId;
     }
+
     public Double getComputedPrice() {
         return computedPrice;
     }
-    public void setComputedPrice(Double computedPrice){
+
+    public void setComputedPrice(Double computedPrice) {
         this.computedPrice = computedPrice;
     }
-    public String getAppliedRuleCodes(){
+
+    public String getAppliedRuleCodes() {
         return appliedRuleCodes;
     }
-    public void setAppliedRules(String appliedRuleCodes){
+
+    public void setAppliedRuleCodes(String appliedRuleCodes) {
         this.appliedRuleCodes = appliedRuleCodes;
     }
-    public LocalDateTime getComputedAt(){
+
+    public LocalDateTime getComputedAt() {
         return computedAt;
     }
-    public void setComputedAt(LocalDateTime computedAt){
-        this.computedAt=computedAt;
+
+    public void setComputedAt(LocalDateTime computedAt) {
+        this.computedAt = computedAt;
     }
 }
