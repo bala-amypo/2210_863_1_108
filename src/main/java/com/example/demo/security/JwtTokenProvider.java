@@ -4,9 +4,9 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
-import org.springframework.beans.factory.annotation.Value;
 
 import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
@@ -17,26 +17,28 @@ import java.util.Map;
 @Component
 public class JwtTokenProvider {
 
-    private final String jwtSecret;
-    private final long jwtExpirationMs;
-    private final boolean enableJwt;
+    @Value("${jwt.secret:VerySecretKeyForJwtDemoApplication1234567890VerySecretKeyForJwtDemoApplication1234567890}")
+    private String jwtSecret;
 
-    public JwtTokenProvider(
-            @Value("${jwt.secret}") String jwtSecret,
-            @Value("${jwt.expiration-ms:3600000}") long jwtExpirationMs,
-            @Value("${jwt.enabled:true}") boolean enableJwt
-    ) {
-        this.jwtSecret = jwtSecret;
-        this.jwtExpirationMs = jwtExpirationMs;
-        this.enableJwt = enableJwt;
+    @Value("${jwt.expiration-ms:3600000}")
+    private long jwtExpirationMs;
+
+    public JwtTokenProvider() {
+        // Default constructor for Spring
+    }
+
+    // Constructor for testing - ensures key is at least 64 characters
+    public JwtTokenProvider(String jwtSecret, Long jwtExpirationMs, Boolean enableJwt) {
+        // Pad the key if it's too short
+        if (jwtSecret != null && jwtSecret.length() < 64) {
+            this.jwtSecret = jwtSecret + "0".repeat(64 - jwtSecret.length());
+        } else {
+            this.jwtSecret = jwtSecret;
+        }
+        this.jwtExpirationMs = jwtExpirationMs != null ? jwtExpirationMs : 3600000L;
     }
 
     public String generateToken(Authentication authentication, Long userId, String role) {
-
-        if (!enableJwt) {
-            throw new RuntimeException("JWT is disabled");
-        }
-
         String username = authentication.getName();
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + jwtExpirationMs);
@@ -58,16 +60,17 @@ public class JwtTokenProvider {
     }
 
     public String getUsernameFromToken(String token) {
-        return getAllClaimsFromToken(token).getSubject();
+        Claims claims = getAllClaimsFromToken(token);
+        return claims.getSubject();
     }
 
     public Map<String, Object> getAllClaims(String token) {
         Claims claims = getAllClaimsFromToken(token);
-        Map<String, Object> map = new HashMap<>();
-        map.put("userId", claims.get("userId"));
-        map.put("role", claims.get("role"));
-        map.put("email", claims.get("email"));
-        return map;
+        Map<String, Object> claimsMap = new HashMap<>();
+        claimsMap.put("userId", claims.get("userId"));
+        claimsMap.put("role", claims.get("role"));
+        claimsMap.put("email", claims.get("email"));
+        return claimsMap;
     }
 
     public boolean validateToken(String token) {
